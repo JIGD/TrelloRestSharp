@@ -18,6 +18,7 @@ namespace RestSharp_Trello_Sample
         public string listName = "";
         public string cardId = "";
         public string cardName = "";
+        JsonDeserializer deserializer = new JsonDeserializer();
 
         [Test, Order(1)]
         public void CreateBoard()
@@ -25,13 +26,13 @@ namespace RestSharp_Trello_Sample
             string boardName = "My Amazing Board";
             IRestResponse boardCreationResponse = trelloClient.createBoard(boardName);
 
-            TrelloBoardBasicModel boardValues = new JsonDeserializer().Deserialize<TrelloBoardBasicModel>(boardCreationResponse);
+            TrelloBoardModel boardValues = deserializer.Deserialize<TrelloBoardModel>(boardCreationResponse);
             //Might want to remove this and use a get for further tests.
             boardId = boardValues.Id;
             this.boardName = boardValues.Name;
             Assert.AreEqual(HttpStatusCode.OK, boardCreationResponse.StatusCode);
             Assert.AreEqual(boardName, boardValues.Name);
-            Assert.AreEqual("private", boardValues.Prefs[0].PermissionLevel);
+            Assert.AreEqual("private", boardValues.Prefs["permissionLevel"]);
             Assert.False(boardValues.Closed);
         }
 
@@ -41,7 +42,7 @@ namespace RestSharp_Trello_Sample
             string listName = "My Amazing List";
             IRestResponse listCreationResponse = trelloClient.createList(boardId, listName);
 
-            TrelloListBasicModel listValues = new JsonDeserializer().Deserialize<TrelloListBasicModel>(listCreationResponse);
+            TrelloListBasicModel listValues = deserializer.Deserialize<TrelloListBasicModel>(listCreationResponse);
 
             listId = listValues.Id;
             this.listName = listValues.Name;
@@ -57,7 +58,7 @@ namespace RestSharp_Trello_Sample
             string cardName = "My Amazing Card";
             IRestResponse cardAdditionResponse = trelloClient.addCardToList(boardId, cardName, listId);
 
-            TrelloCardBasicModel cardValues = new JsonDeserializer().Deserialize<TrelloCardBasicModel>(cardAdditionResponse);
+            TrelloCardBasicModel cardValues = deserializer.Deserialize<TrelloCardBasicModel>(cardAdditionResponse);
 
             cardId = cardValues.Id;
             this.cardName = cardValues.Name;
@@ -81,7 +82,7 @@ namespace RestSharp_Trello_Sample
 
             IRestResponse cardUpdateResponse = trelloClient.updateCard(boardId, listId, cardId, extraParams);
 
-            TrelloCardBasicModel cardValues = new JsonDeserializer().Deserialize<TrelloCardBasicModel>(cardUpdateResponse);
+            TrelloCardBasicModel cardValues = deserializer.Deserialize<TrelloCardBasicModel>(cardUpdateResponse);
 
             Assert.AreEqual(HttpStatusCode.OK, cardUpdateResponse.StatusCode);
             Assert.AreEqual("My Amazing Card Updated!", cardValues.Name);
@@ -96,7 +97,7 @@ namespace RestSharp_Trello_Sample
         public void DeleteBoard()
         {
             IRestResponse boardDeletionResponse = trelloClient.deleteBoard(boardId);
-            TrelloBoardBasicModel boardValues = new JsonDeserializer().Deserialize<TrelloBoardBasicModel>(boardDeletionResponse);
+            TrelloBoardModel boardValues = deserializer.Deserialize<TrelloBoardModel>(boardDeletionResponse);
 
             Assert.IsNull(boardValues._Value);
         }
