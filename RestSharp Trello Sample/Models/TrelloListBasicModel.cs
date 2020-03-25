@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
+using RestSharp;
+using RestSharp.Serialization.Json;
 
 namespace RestSharp_Trello_Sample
 {
@@ -18,5 +20,10 @@ namespace RestSharp_Trello_Sample
 
         [JsonProperty("idBoard")]
         public string IdBoard { get; set; }
+
+        public TrelloListBasicModel(IRestResponse createResponse)
+        {
+            TrelloListBasicModel values = new JsonDeserializer().Deserialize<TrelloListBasicModel>(createResponse);
+        }
     }
 }

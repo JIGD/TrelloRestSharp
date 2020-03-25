@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
+using RestSharp;
+using RestSharp.Serialization.Json;
 
 namespace RestSharp_Trello_Sample
 {
@@ -15,5 +17,10 @@ namespace RestSharp_Trello_Sample
 
         [JsonProperty("voting")]
         public string Voting { get; set; }
+
+        public TrelloBoardPrefsModel(IRestResponse createResponse)
+        {
+            TrelloListBasicModel values = new JsonDeserializer().Deserialize<TrelloListBasicModel>(createResponse);
+        }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using RestSharp;
+using RestSharp.Serialization.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,5 +14,9 @@ namespace RestSharp_Trello_Sample
 
         [JsonProperty("attachments")]
         public int Attachments { get; set; }
+        public TrelloCardBadgesModel(IRestResponse createResponse)
+        {
+            TrelloListBasicModel values = new JsonDeserializer().Deserialize<TrelloListBasicModel>(createResponse);
+        }
     }
 }
