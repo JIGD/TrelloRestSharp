@@ -9,12 +9,7 @@ namespace RestSharp_Trello_Sample.Clients
     {
         private string trelloKey = "";
         private string trelloToken = "";
-        RestClient trelloClient;
-
-
-        internal TrelloClient() {
-            RestClient trelloClient = new RestClient("https://api.trello.com/1");
-        }
+        RestClient trelloClient = new RestClient("https://api.trello.com/1");
 
         internal IRestResponse createBoard(string boardName, Dictionary<string, string> extraParams = null)
         {

@@ -9,6 +9,8 @@ namespace RestSharp_Trello_Sample
 {
     public class TrelloBoardBasicModel
     {
+        public TrelloBoardBasicModel() { }
+
         [JsonProperty("id")]
         public string Id { get; set; }
 
@@ -23,9 +25,5 @@ namespace RestSharp_Trello_Sample
 
         [JsonProperty("_value")]
         public object? _Value { get; set; }
-
-        public TrelloBoardBasicModel(IRestResponse createResponse) {
-            TrelloBoardBasicModel values = new JsonDeserializer().Deserialize<TrelloBoardBasicModel>(createResponse);
-        }
     }
 }

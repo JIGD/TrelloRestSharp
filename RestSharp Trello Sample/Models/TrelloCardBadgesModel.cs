@@ -14,9 +14,5 @@ namespace RestSharp_Trello_Sample
 
         [JsonProperty("attachments")]
         public int Attachments { get; set; }
-        public TrelloCardBadgesModel(IRestResponse createResponse)
-        {
-            TrelloListBasicModel values = new JsonDeserializer().Deserialize<TrelloListBasicModel>(createResponse);
-        }
     }
 }

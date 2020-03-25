@@ -20,10 +20,5 @@ namespace RestSharp_Trello_Sample
 
         [JsonProperty("idBoard")]
         public string IdBoard { get; set; }
-
-        public TrelloListBasicModel(IRestResponse createResponse)
-        {
-            TrelloListBasicModel values = new JsonDeserializer().Deserialize<TrelloListBasicModel>(createResponse);
-        }
     }
 }

@@ -17,10 +17,5 @@ namespace RestSharp_Trello_Sample
 
         [JsonProperty("voting")]
         public string Voting { get; set; }
-
-        public TrelloBoardPrefsModel(IRestResponse createResponse)
-        {
-            TrelloListBasicModel values = new JsonDeserializer().Deserialize<TrelloListBasicModel>(createResponse);
-        }
     }
 }
